@@ -31,7 +31,7 @@
         <p class="hero-description">{{personal_info.introduction|truncatechars:250}}</p>
       {% endif %}
       <div class="hero-actions">
-        <a class="btn" href="{% get_media_prefix %}resume.rohit.pdf" download>Download CV</a>
+        <a class="btn" href="{% static 'media/resume_rohit.pdf' %}" download>Download CV</a>
         {% if personal_info %}
           {% if personal_info.linkedin or personal_info.github or personal_info.twitter %}
             <div class="footer-social">

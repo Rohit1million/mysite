@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,14 +77,19 @@ WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default="postgresql://portfolio_db_pq3u_user:jF4OaAvYeqEdNtWpYdnJjtK9grQR6Ltb@dpg-d37tk4je5dus739m7j80-a.singapore-postgres.render.com:5432/portfolio_db_pq3u?sslmode=require",
-        conn_max_age=600,
-        ssl_require=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rohit_portfolio_db',        # <-- The schema you just created
+        'USER': 'ResumePort',       # <-- Your MySQL username
+        'PASSWORD': 'jacks0nkelly',# <-- Replace with the real password
+        'HOST': '127.0.0.1',        # Localhost
+        'PORT': '3306',             # MySQL default port
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+    }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -118,16 +124,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# URL to serve static files
+STATIC_URL = '/static/'
 
+# Where collectstatic will put files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Static files configuration for development
-STATICFILES_DIRS = [
-    BASE_DIR / 'portfolio/static',
-]
+# Directories where Django will look for additional static files
 
-# For production, you'll also need:
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (uploaded content)
